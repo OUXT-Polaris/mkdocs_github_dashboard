@@ -45,7 +45,7 @@ setup(
     zip_safe=False,
     entry_points={
         'mkdocs.plugins': [
-            'with-pdf = mkdocs_github_dashboard.mkdocs_github_dashboard:MkDocsGithubDashboardPlugin'
+            'github-dashboard = mkdocs_github_dashboard.mkdocs_github_dashboard:MkDocsGithubDashboardPlugin'
         ]
     }
 )
