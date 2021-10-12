@@ -12,9 +12,11 @@ class MkDocsGithubDashboardPlugin(BasePlugin):
             packages = replace_target[18:len(replace_target)-1].split(',')
             dict = {}
             for package in packages:
-                dict[package] = {}
+                package_url = "[" + package + "](https://github.com/" + package + ")"
+                dict[package_url] = {}
                 for workflow in github.workflow.get(package)["workflows"]:
-                    dict[package][workflow["name"]] = "![Not Found](" + workflow["badge_url"] + ")"
+                    if workflow["state"] == "active":
+                        dict[package_url][workflow["name"]] = "![Not Found](" + workflow["badge_url"] + ")"
             badge_urls = pd.DataFrame().from_dict(dict)
             markdown = markdown.replace(replace_target, badge_urls.T.to_markdown())
 
