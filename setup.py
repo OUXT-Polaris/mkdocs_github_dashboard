@@ -11,7 +11,9 @@ with open('HISTORY.rst') as history_file:
     history = history_file.read()
 
 requirements = [ 
-    'mkdocs>=1.2.2'
+    'mkdocs>=1.1.2',
+    'python-github-api',
+    'tabulate'
 ]
 
 test_requirements = [ ]
