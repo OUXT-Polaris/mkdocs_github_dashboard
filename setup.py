@@ -13,7 +13,7 @@ with open('HISTORY.rst') as history_file:
 requirements = [ 
     'mkdocs>=1.1.2',
     'python-github-api',
-    'tabulate'
+    'tabulate',
     'pandas'
 ]
 
