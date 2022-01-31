@@ -16,7 +16,6 @@ class MkDocsGithubDashboardPlugin(BasePlugin):
                 package_url = "[" + package + "](https://github.com/" + package + ")"
                 dict[package_url] = {}
                 print("processing package : " + package)
-                print(github.workflow.get(package))
                 if "workflows" in github.workflow.get(package).keys():
                     for workflow in github.workflow.get(package)["workflows"]:
                         if workflow["state"] == "active":
