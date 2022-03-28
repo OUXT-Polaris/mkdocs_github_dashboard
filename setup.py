@@ -44,7 +44,7 @@ setup(
     test_suite='tests',
     tests_require=test_requirements,
     url='https://github.com/hakuturu583/mkdocs_github_dashboard',
-    version='0.2.1',
+    version='0.2.2',
     zip_safe=False,
     entry_points={
         'mkdocs.plugins': [
