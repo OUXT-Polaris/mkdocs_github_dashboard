@@ -16,15 +16,19 @@ class MkDocsGithubDashboardPlugin(BasePlugin):
             for package in packages:
                 package_url = "[" + package + "](https://github.com/" + package + ")"
                 workflow_dict[package_url] = {}
-                pull_request_dict[package_url] = {}
+                pull_request_text = {}
                 print("processing package : " + package)
                 if "workflows" in github.workflow.get(package).keys():
                     for workflow in github.workflow.get(package)["workflows"]:
                         if workflow["state"] == "active" and workflow["name"] != "pages-build-deployment":
                             workflow_dict[package_url][workflow["name"]] = "![Not Found](" + workflow["badge_url"] + ")"
+                pull_request_index = 0
                 for pull_request in github.pull_request.get(package):
                     text = "[" + pull_request["title"] + "](" + pull_request["html_url"] + ")"
-                    pull_request_dict[package_url]["pull_request"] = text
+                    pull_request_text[pull_request_index] = text
+                    pull_request_index = pull_request_index + 1
+                if len(pull_request_text) != 0:
+                    pull_request_dict[package_url] = pull_request_text
             badge_urls = pd.DataFrame().from_dict(workflow_dict)
             pull_requests = pd.DataFrame().from_dict(pull_request_dict)
             #print(pull_requests.T.to_markdown())
@@ -34,7 +38,7 @@ class MkDocsGithubDashboardPlugin(BasePlugin):
 if __name__ == '__main__':
     plugin = MkDocsGithubDashboardPlugin()
     #text = "@github_dashboard(OUXT-Polaris/color_names,OUXT-Polaris/data_buffer,OUXT-Polaris/dynamixel_hardware_interface,OUXT-Polaris/geographic_conversion,OUXT-Polaris/geographic_info)"
-    text = "@github_dashboard(OUXT-Polaris/dynamixel_hardware_interface)"
+    text = "@github_dashboard(OUXT-Polaris/dynamixel_hardware_interface,OUXT-Polaris/geographic_info)"
     markdown = plugin.on_page_markdown(text)
     print("")
     print(markdown)
