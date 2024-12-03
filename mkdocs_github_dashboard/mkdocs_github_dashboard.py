@@ -3,9 +3,20 @@ from mkdocs.plugins import BasePlugin
 from python_github.python_github import Github
 import re
 import pandas as pd
+import os
+
+def is_env_var_true(env_var_name: str) -> bool:
+    value = os.environ.get(env_var_name, "").strip().lower()
+    if value == "true":
+        return True
+    elif value == "false":
+        return False
+    return False
 
 class MkDocsGithubDashboardPlugin(BasePlugin):
     def on_page_markdown(self, markdown, **kwargs):
+        if not is_env_var_true("SHOW_DASHBOARD"):
+            return markdown
         github = Github()
         for m in re.finditer(r'@github_dashboard\(.+?\)', markdown, re.MULTILINE):
             replace_target = m.group()
